@@ -1,0 +1,35 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="flip-card-board">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]</h2>
+  </template>
+</dom-module>
+
+<script>
+  
+  class FlipCardBoard extends Polymer.Element {
+
+    constructor() {
+      super();
+    }
+
+    static get is() {
+      return 'flip-card-board';
+    }
+
+    connectedCallback() {
+      super.connectedCallback();
+    }
+
+  }
+
+  customElements.define(FlipCardBoard.is, FlipCardBoard);
+
+</script>
+
