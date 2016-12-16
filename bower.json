@@ -2,7 +2,8 @@
   "name": "flip-card-board",
   "main": "flip-card-board.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#2.0-preview"
+    "polymer": "Polymer/polymer#2.0-preview",
+    "flip-card": "Flip-Card#*"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

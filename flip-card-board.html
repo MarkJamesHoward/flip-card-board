@@ -7,8 +7,68 @@
       :host {
         display: block;
       }
+
+      flip-card {
+        margin:10px;
+      }
+
+      body {
+        height: 100%;
+      }
+
+      #container {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-rows: 200px 200px 200px;
+        grid-template-columns: 20% 20% 20% 20%;
+
+        grid-column-gap: 1em; 
+        grid-row-gap: 1em;
+      }
+
+      .item1 {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .item2 {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .item3 {
+        grid-column: 3;
+        grid-row: 1;
+      }
+
+      .item4 {
+        grid-column: 4;
+        grid-row: 1;
+      }
+
+  
     </style>
-    <h2>Hello [[prop1]]</h2>
+
+    <div id="container">
+      <flip-card class="item1">
+        <img src="./images/rogue.jpg"></img>
+      </flip-card>
+      <flip-card class="item2"></flip-card>
+      <flip-card class="item3"></flip-card>
+      <flip-card class="item4"></flip-card>
+
+      <flip-card class="item5"></flip-card>
+      <flip-card class="item6"></flip-card>
+      <flip-card class="item7"></flip-card>
+      <flip-card class="item8"></flip-card>
+
+      <flip-card class="item9"></flip-card>
+      <flip-card class="item10"></flip-card>
+      <flip-card class="item11"></flip-card>
+      <flip-card class="item12"></flip-card>
+    </div>
+
   </template>
 </dom-module>
 
