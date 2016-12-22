@@ -15,20 +15,14 @@
          margin: 3px;
       }
 
-      body {
-        height: 100%;
-      }
-
       #container {
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template-rows: 33% 33% 33%;
-        grid-template-columns: 15% 15% 15% 15% 15% 15%;
+        grid-template-rows: 23% 23% 23% 22%;
+        grid-template-columns: 20% 20% 20% 20% 20%;
         grid-column-align: center;
         grid-row-align: center;  
-        /*grid-column-gap: 1em; 
-        grid-row-gap: 1em;*/
       }
 
       .item1 {
@@ -66,14 +60,17 @@
       }
 
     </style>
+
     <div id="players">
       <div>
-        <h3 id="player1Score" class="activePlayer">Player1: {{player1Score}}</h3>
+        <h3 id="player1Score" class="activePlayer">Player 1: {{player1Score}}</h3>
       </div>
 
-      <div >
-        <h3 id="player2Score">Player2: {{player2Score}}</h3>
+      <div>
+        <h3 id="player2Score">Player 2: {{player2Score}}</h3>
       </div>
+
+      <button>New Game</button>
     </div>
 
     <div id="container">
@@ -149,6 +146,15 @@
        <flip-card on-click="cardViewed" class="item18">
         <img id='item18img' style="width:100%;height:100%" src=""></img>
       </flip-card>
+
+       <flip-card on-click="cardViewed" class="item19">
+        <img id='item19img' style="width:100%;height:100%" src=""></img>
+      </flip-card>
+
+       <flip-card on-click="cardViewed" class="item20">
+        <img id='item20img' style="width:100%;height:100%" src=""></img>
+      </flip-card>
+      
       
       <player-scores></player-scores>
       
@@ -280,7 +286,7 @@
 
       while (validNumber === false) {
         validNumber = true;
-        num1 = Math.floor((Math.random() * 18) + 1)
+        num1 = Math.floor((Math.random() * 20) + 1)
 
         for(let index = 0; index < usedCards.length; index++)
         {
@@ -295,7 +301,7 @@
 
       while (validNumber === false) {
         validNumber = true;
-        num2 = Math.floor((Math.random() * 18) + 1)
+        num2 = Math.floor((Math.random() * 20) + 1)
 
         for(let index = 0; index < usedCards.length; index++)
         {
@@ -333,10 +339,12 @@
       this.generateCards('heady', usedCards);
       this.generateCards('kong', usedCards);
       this.generateCards('minion', usedCards);
+      this.generateCards('moo', usedCards);
       this.generateCards('minion', usedCards);
-      this.generateCards('minion', usedCards);
-      this.generateCards('minion', usedCards);
+      this.generateCards('bear', usedCards);
       this.generateCards('kong', usedCards);
+      this.generateCards('GuooGuoo', usedCards);
+
     }
   }
 
