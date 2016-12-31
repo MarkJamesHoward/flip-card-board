@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer-element.html"/ >
 <link rel="import" href="../flip-card/flip-card.html" />
 <link rel="import" href="../iron-icons/iron-icons.html" />
+<link rel="import" href="../paper-dialog/paper-dialog.html" />
 <link rel="stylesheet" href="../../fireworks.css">
 
 <dom-module id="flip-card-board">
@@ -64,16 +65,14 @@
         grid-row: 1;
       }
         
-      input[type="text"] {
-        display: block;
-      }
-  
       .inactivePlayer {
          display: flex;
+         border-radius: 10px;
         flex-direction: column;
         transition: all 2s ease;
         background-color:aliceblue;
         flex-grow: 1;
+        margin-right: 2px;
       }
 
       .activePlayer {  
@@ -85,7 +84,6 @@
         display: flex;
         justify-content: space-between;
         /*align-items: center;*/
-        border: 1px solid black;
         height:20%;
         margin: 0;
         padding: 0;
@@ -99,9 +97,7 @@
         font-size: 24px;
         margin-right: 10px;
         height: 100%;
-      }
-
-    
+      }  
 
       .itemScore {
         font-size:45px;
@@ -150,9 +146,9 @@
       .points > div {
         font-size:3em;
         background-color: white;
-        border-radius: 1em;
+        border-radius:0.1em;
         text-align: center;
-        color: red;
+        color: pink;
         width: 20%;
       }
 
@@ -164,14 +160,17 @@
 
       input {
         background-color: lightsalmon;
-        margin: 0;
-        padding: 0;
+      }
+
+      #EnterName1Dialog, #EnterName2Dialog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
    
       .scoreValue {
         font-size: 3em;
       }
-
 
       .winnerText > button {
         font-size: 2rem;
@@ -183,6 +182,18 @@
       <!--<div id="points" class="points hidePoints">
         <div>+5</div>
       </div>-->
+
+      <paper-dialog id="EnterName1Dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+          <h2 style="margin:0">Enter name for Player1</h2>
+          <input style="margin:0" type="text" value$={{player1Name}} id="player1NameInput" />
+          <button on-click="closeDialog">Update</button>
+      </paper-dialog>
+
+      <paper-dialog id="EnterName2Dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+          <h2 style="margin:0">Enter name for Player1</h2>
+          <input style="margin:0" type="text" value$={{player2Name}} id="player2NameInput" />
+          <button on-click="closeDialog">Update</button>
+      </paper-dialog>
 
      <div id="player1Winner" class="winnerText">
         <div>{{player1Name}} Wins!</div>
@@ -196,15 +207,20 @@
 
     <div id="players">
       <div id="player1Score" class="inactivePlayer activePlayer">
-        <input value$="{{player1Name}}" class="largeText"></input>
+          <div style="display:flex; justify-content: center; align-items: center;">
+            <h2 class="largeText">{{player1Name}}</h2>
+            <iron-icon icon="icons:more-horiz" on-click="enterPlayer1Name"></iron-icon>
+          </div>
         <h3><span id="scoreAnimation1" class="scoreValue"> {{player1Score}} </span></h3>
       </div>
 
       <div id="player2Score" class="inactivePlayer">
-        <input value$="{{player2Name}}" class="largeText"></input>
-        <h3><span id="scoreAnimation2" class="scoreValue" > {{player2Score}} </span></h3>
+        <div style="display: flex; justify-content: center;align-items: center">
+          <h2 class="largeText">{{player2Name}}</h2>
+          <iron-icon icon="icons:more-horiz" on-click="enterPlayer2Name"></iron-icon>
+        </div>
+        <h3><span id="scoreAnimation2" class="scoreValue"> {{player2Score}} </span></h3>
       </div>
-
     </div>
 
     <div id="container">
@@ -317,6 +333,7 @@
       this.player1Name = "player1";
       this.player2Name = "player2";
     }
+
     static get config(){ 
       return {
         properties: {
@@ -380,7 +397,6 @@
             console.log('matched!');
 
             this.cardsFound = this.cardsFound + 2;
-            //this.$.points.classList.remove('hidePoints');
 
             // Keep a record of these cards so that we can make
             // them visible again to start a new game.
@@ -447,6 +463,19 @@
           this.$.player2Score.classList.toggle('activePlayer')
           this.$.player1Score.classList.toggle('activePlayer')
         }
+    }
+
+    closeDialog() {
+      this.$.EnterName1Dialog.close();
+      this.$.EnterName2Dialog.close();
+    }
+
+    enterPlayer1Name() {
+      this.$.EnterName1Dialog.open();
+    }
+
+    enterPlayer2Name() {
+      this.$.EnterName2Dialog.open();
     }
 
     cardViewed(e) {

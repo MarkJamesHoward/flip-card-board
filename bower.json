@@ -3,7 +3,8 @@
   "main": "flip-card-board.html",
   "dependencies": {
     "polymer": "Polymer/polymer#2.0-preview",
-    "flip-card": "Flip-Card#*"
+    "flip-card": "Flip-Card#*",
+    "paper-dialog": "polymerelements/paper-dialog#2.0-preview"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
