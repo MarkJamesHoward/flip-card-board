@@ -1,10 +1,20 @@
-<link rel="import" href="../polymer/polymer-element.html">
-<link rel="import" href="../flip-card/flip-card.html">
+<link rel="import" href="../polymer/polymer-element.html"/ >
+<link rel="import" href="../flip-card/flip-card.html" />
+<link rel="import" href="../iron-icons/iron-icons.html" />
 <link rel="stylesheet" href="../../fireworks.css">
 
 <dom-module id="flip-card-board">
   <template>
     <style>
+
+    @keyframes bounce {
+      0% {font-size: 3em;}
+      30% {font-size: 5em;color:red;}
+      60% {font-size: 4em;}
+      90% {font-size: 4.5em;color: blue;}
+      100% {font-size: 3em;}
+    }
+
       :host {
         display: block;
       }
@@ -12,12 +22,16 @@
         box-sizing: border-box;
       }
       .remove {
-        opacity: 0;
+        opacity: 0.1;
       }
       flip-card {
         transition: opacity 2s ease;
          margin: 3px;
          position: relative;
+      }
+
+      .animateScore {
+        animation: bounce 1s ease;
       }
 
       #container {
@@ -28,7 +42,6 @@
         grid-template-columns: 20% 20% 20% 20% 20%;
         grid-column-align: center;
         grid-row-align: center;  
-        overflow: hidden;
       }
 
       .item1 {
@@ -51,20 +64,21 @@
         grid-row: 1;
       }
         
+      input[type="text"] {
+        display: block;
+      }
   
-      /*.activePlayer > h1:before {
-        content: '=>';
-      }*/
       .inactivePlayer {
+         display: flex;
+        flex-direction: column;
         transition: all 2s ease;
         background-color:aliceblue;
         flex-grow: 1;
       }
 
-      .activePlayer {
+      .activePlayer {  
         transition: all 2s ease;
         background-color: lightsalmon;
-        /*background: linear-gradient(-90deg, blue, darkblue);*/
       }
 
       #players {
@@ -73,6 +87,8 @@
         /*align-items: center;*/
         border: 1px solid black;
         height:20%;
+        margin: 0;
+        padding: 0;
       }
 
       #players h1, #players h3 {
@@ -85,9 +101,7 @@
         height: 100%;
       }
 
-      .scoreAnimation {
-        font-size: 3em;
-      }
+    
 
       .itemScore {
         font-size:45px;
@@ -95,7 +109,6 @@
         top: 50%;
         left: 50%;
         background-color: white;
-
       }
 
       .invisible {
@@ -103,7 +116,8 @@
       }
 
       .largeText {
-        font-size: 3em;
+        font-size: 2em;
+        width:100%;
         text-align: center;
       }
 
@@ -123,6 +137,42 @@
         z-index:100;
       }
 
+      .points {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+        z-index: 200;
+      }
+
+      .points > div {
+        font-size:3em;
+        background-color: white;
+        border-radius: 1em;
+        text-align: center;
+        color: red;
+        width: 20%;
+      }
+
+      .hidePoints {
+        visibility: hidden;
+        opacity: 0;
+        transition: all 1s ease;
+      }
+
+      input {
+        background-color: lightsalmon;
+        margin: 0;
+        padding: 0;
+      }
+   
+      .scoreValue {
+        font-size: 3em;
+      }
+
+
       .winnerText > button {
         font-size: 2rem;
         color: white;
@@ -130,28 +180,31 @@
       }
     </style>
 
+      <!--<div id="points" class="points hidePoints">
+        <div>+5</div>
+      </div>-->
+
      <div id="player1Winner" class="winnerText">
-        <div>Player 1 Wins!</div>
+        <div>{{player1Name}} Wins!</div>
         <button on-click="startNewGame">New Game</button>
       </div>
 
       <div id="player2Winner" class="winnerText">
-        <div>Player 2 Wins!</div>
+        <div>{{player2Name}} Wins!</div>
         <button on-click="startNewGame">New Game</button>
       </div>
 
     <div id="players">
       <div id="player1Score" class="inactivePlayer activePlayer">
-        <div class="largeText">Player 1</div>
-        <h3>score: <span id="scoreAnimation"> {{player1Score}} </span></h3>
+        <input value$="{{player1Name}}" class="largeText"></input>
+        <h3><span id="scoreAnimation1" class="scoreValue"> {{player1Score}} </span></h3>
       </div>
 
       <div id="player2Score" class="inactivePlayer">
-        <div class="largeText">Player 2</div>
-        <h3>score: <span id="scoreAnimation"> {{player2Score}} </span></h3>
+        <input value$="{{player2Name}}" class="largeText"></input>
+        <h3><span id="scoreAnimation2" class="scoreValue" > {{player2Score}} </span></h3>
       </div>
 
-      <!--<button class="largeButton">New Game</button>-->
     </div>
 
     <div id="container">
@@ -261,10 +314,14 @@
       this.player2Score = 0;
       this.cardsFound = 0;
       this.removedCards = [];
+      this.player1Name = "player1";
+      this.player2Name = "player2";
     }
     static get config(){ 
       return {
         properties: {
+          player1Name : {type: String, notify: true},
+          player2Name: {type: String, notify: true},
           player1Score : {type: Number},
           player2Score : {type: Number},
           activePlayer: {type: String},
@@ -323,38 +380,45 @@
             console.log('matched!');
 
             this.cardsFound = this.cardsFound + 2;
+            //this.$.points.classList.remove('hidePoints');
 
             // Keep a record of these cards so that we can make
             // them visible again to start a new game.
             this.removedCards.push(this.card1Selected);
             this.removedCards.push(this.card2Selected);
 
+
             this.card1Selected.childNodes[1].classList.remove('invisible');
 
             if (this.activePlayer === "player1") {
              
+              this.player1Score += 5;
+              this.$.scoreAnimation1.classList.add('animateScore');
+
               setTimeout( () => {
               this.card1Selected.classList.add('remove');
               this.card2Selected.classList.add('remove');
               this.card1Selected = null;
               this.card2Selected = null;
               this.allowNewSelection = true;
-              this.player1Score += 5;
-              this.DisplayWinner("player1")
-              
+              this.DisplayWinner("player1");             
+              this.$.scoreAnimation1.classList.remove('animateScore');
+
               }, 1000);
             }
             else {
              
+              this.player2Score += 5;
+              this.$.scoreAnimation2.classList.add('animateScore');
+
                 setTimeout( () => {
               this.card1Selected.classList.add('remove');
               this.card2Selected.classList.add('remove');
               this.card1Selected = null;
               this.card2Selected = null;
               this.allowNewSelection = true;
-              this.player2Score += 5;
               this.DisplayWinner("player2");
-
+              this.$.scoreAnimation2.classList.remove('animateScore');
               }, 1000);
 
             }
