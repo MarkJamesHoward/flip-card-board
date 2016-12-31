@@ -185,13 +185,13 @@
 
       <paper-dialog id="EnterName1Dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
           <h2 style="margin:0">Enter name for Player1</h2>
-          <input style="margin:0" type="text" value$={{player1Name}} id="player1NameInput" />
+          <input style="margin:0" type="text" value="{{player1Name::change}}"  id="player1NameInput" />
           <button on-click="closeDialog">Update</button>
       </paper-dialog>
 
       <paper-dialog id="EnterName2Dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
           <h2 style="margin:0">Enter name for Player1</h2>
-          <input style="margin:0" type="text" value$={{player2Name}} id="player2NameInput" />
+          <input style="margin:0" type="text" value="{{player2Name::change}}" id="player2NameInput" />
           <button on-click="closeDialog">Update</button>
       </paper-dialog>
 
