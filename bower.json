@@ -2,7 +2,7 @@
   "name": "flip-card-board",
   "main": "flip-card-board.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#2.0-preview",
+    "polymer": "Polymer/polymer#2.0.0-rc.2",
     "flip-card": "Flip-Card#*",
     "paper-dialog": "polymerelements/paper-dialog#2.0-preview",
     "iron-icons": "polymerelements/iron-icons#2.0-preview"
